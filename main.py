@@ -5,10 +5,13 @@ from kivy.uix.widget import Widget
 from kivy.properties import (
     NumericProperty, ReferenceListProperty, ObjectProperty
 )
+from kivy.uix.boxlayout import BoxLayout
 from kivy.vector import Vector
 from kivy.clock import Clock
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.popup import Popup
+from kivy.uix.label import Label
+from kivy.uix.button import Button, ButtonBehavior
 
 class PongPaddle(Widget):
     score = NumericProperty(0)
@@ -69,14 +72,14 @@ class PongGame(Widget):
             self.player2.score = 0
             self.createPopUp("Game Over", "PLayer2 Wins")
 
-        def createPopUp(self,title,msg):
-            box = BoxLayout(orientation = 'vertical', padding = (10))
-            box.add_widget(Label(text = msg,font_size='15sp'))
-            btn1 = Button(text = "Ok")
-            box.add_widget(btn1)
-            popup = Popup(title=title, title_size= (10),title_align = 'center', content = box,size_hint=(None, None), size=(400, 200), auto_dismiss = True)
-            btn1.bind(on_press = popup.dismiss)
-            popup.open()
+    def createPopUp(self,title,msg):
+        box = BoxLayout(orientation = 'vertical', padding = (10))
+        box.add_widget(Label(text = msg,font_size='15sp'))
+        btn1 = Button(text = "Ok")
+        box.add_widget(btn1)
+        popup = Popup(title=title, title_size= (10),title_align = 'center', content = box,size_hint=(None, None), size=(400, 200), auto_dismiss = True)
+        btn1.bind(on_press = popup.dismiss)
+        popup.open()
                 
             
     def on_touch_move(self, touch):
