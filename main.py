@@ -12,6 +12,7 @@ from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.popup import Popup
 from kivy.uix.label import Label
 from kivy.uix.button import Button, ButtonBehavior
+import time
 
 class PongPaddle(Widget):
     score = NumericProperty(0)
@@ -62,26 +63,30 @@ class PongGame(Widget):
             self.serve_ball(vel=(-4, 0))
             
         if self.player1.score == 10:
+            Clock.unschedule(self.update)
+            #Clock.schedule_interval(self.update, 1.0 / 60.0).cancel()
             self.player1.score = 0
             self.player2.score = 0
-            self.createPopUp("Game Over","Player1 Wins")
+            self.createPopUp("Game Over","Player1 Wins Press r to Restart")
             
             
         if self.player2.score == 10:
+            Clock.unschedule(self.update)
+            #Clock.schedule_interval(self.update, 1.0 / 60.0).cancel()
             self.player1.score = 0
             self.player2.score = 0
-            self.createPopUp("Game Over", "PLayer2 Wins")
+            self.createPopUp("Game Over", "Player2 Wins Press r to Restart")
+
 
     def createPopUp(self,title,msg):
         box = BoxLayout(orientation = 'vertical', padding = (10))
         box.add_widget(Label(text = msg,font_size='15sp'))
         btn1 = Button(text = "Ok")
         box.add_widget(btn1)
-        popup = Popup(title=title, title_size= (10),title_align = 'center', content = box,size_hint=(None, None), size=(400, 200), auto_dismiss = True)
+        popup = Popup(title=title, title_size= (30),title_align = 'center', content = box,size_hint=(None, None), size=(400, 200), auto_dismiss = True)         
         btn1.bind(on_press = popup.dismiss)
-        popup.open()
-                
-            
+        popup.open()      
+
     def on_touch_move(self, touch):
         if touch.x < self.width / 3:
             self.player1.center_y = touch.y
@@ -106,6 +111,8 @@ class PongGame(Widget):
             self.player2.center_y += 50
         elif keycode[1] == 'down':
             self.player2.center_y -= 50
+        elif keycode[1] == 'r':
+            Clock.schedule_interval(self.update, 1.0 / 60.0)
         return True
 
 class PongApp(App):
