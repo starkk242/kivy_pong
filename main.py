@@ -104,13 +104,25 @@ class PongGame(Widget):
 
     def _on_keyboard_down(self, keyboard, keycode, text, modifiers):
         if keycode[1] == 'w':
-            self.player1.center_y += 50
+            if self.player1.center_y == self.top:
+                pass
+            else :
+                self.player1.center_y += 50
         elif keycode[1] == 's':
-            self.player1.center_y -= 50
+            if self.player1.center_y == 0:
+                pass
+            else :
+                self.player1.center_y -= 50
         elif keycode[1] == 'up':
-            self.player2.center_y += 50
+            if self.player2.center_y == self.top:
+                pass
+            else :
+                self.player2.center_y += 50
         elif keycode[1] == 'down':
-            self.player2.center_y -= 50
+            if self.player2.center_y == 0:
+                pass
+            else :
+                self.player2.center_y -= 50
         elif keycode[1] == 'r':
             Clock.schedule_interval(self.update, 1.0 / 60.0)
         return True
